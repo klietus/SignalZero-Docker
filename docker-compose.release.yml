@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - signalzero-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  chromadb:
+    image: chromadb/chroma:latest
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    networks:
+      - signalzero-net
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  localnode:
+    image: klietus/signalzero-node:latest
+    container_name: signalzero-node
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - REDIS_URL=redis://redis:6379
+      - CHROMA_URL=http://chromadb:8000
+      - CHROMA_COLLECTION=signalzero
+      - USE_EXTERNAL_VECTOR_DB=true
+      - INFERENCE_PROVIDER=local
+      - INFERENCE_ENDPOINT=http://host.docker.internal:1234/v1
+      - SETTINGS_FILE_PATH=/app/data/settings.json
+    volumes:
+      - node_logs:/app/logs
+      - node_data:/app/data
+      - ./settings.json:/app/data/settings.json
+      - node_loops:/app/loops
+    depends_on:
+      redis:
+        condition: service_healthy
+      chromadb:
+        condition: service_started
+    networks:
+      - signalzero-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  localchat:
+    image: klietus/signalzero-chat:latest
+    container_name: signalzero-chat
+    ports:
+      - "3000:80"
+    depends_on:
+      - localnode
+    networks:
+      - signalzero-net
+
+volumes:
+  redis_data:
+  chroma_data:
+  node_logs:
+  node_data:
+  node_loops:
+
+networks:
+  signalzero-net:
+    driver: bridge
