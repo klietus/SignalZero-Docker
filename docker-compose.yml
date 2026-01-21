@@ -49,6 +49,8 @@ services:
       - INFERENCE_PROVIDER=local
       - INFERENCE_ENDPOINT=http://host.docker.internal:1234/v1
       - SETTINGS_FILE_PATH=/app/data/settings.json
+      - GOOGLE_CUSTOM_SEARCH_KEY=${GOOGLE_CUSTOM_SEARCH_KEY}
+      - GOOGLE_CSE_ID=${GOOGLE_CSE_ID}
     volumes:
       - node_logs:/app/logs
       - node_data:/app/data
