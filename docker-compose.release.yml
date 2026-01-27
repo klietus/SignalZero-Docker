@@ -48,6 +48,11 @@ services:
       - SETTINGS_FILE_PATH=/app/data/settings.json
       - GOOGLE_CUSTOM_SEARCH_KEY=${GOOGLE_CUSTOM_SEARCH_KEY}
       - GOOGLE_CSE_ID=${GOOGLE_CSE_ID}
+      - PULSE_SERVER=tcp:host.docker.internal:4713
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     volumes:
       - node_logs:/app/logs
       - node_data:/app/data
@@ -62,6 +67,25 @@ services:
       - signalzero-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  voiceservice:
+    image: klietus/signalzero-voice:latest
+    container_name: signalzero-voice
+    environment:
+      - PULSE_SERVER=tcp:host.docker.internal:4713
+      - KERNEL_URL=http://localnode:3001/api
+    depends_on:
+      - localnode
+    networks:
+      - signalzero-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        limits:
+          memory: 6G
+    volumes:
+      - voiceservice_cache:/root/.cache
 
   localchat:
     image: klietus/signalzero-chat:latest
@@ -79,6 +103,7 @@ volumes:
   node_logs:
   node_data:
   node_loops:
+  voiceservice_cache:
 
 networks:
   signalzero-net:
