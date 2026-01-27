@@ -37,6 +37,11 @@
     "apiKey": "YOUR_GOOGLE_SEARCH_KEY",
     "cx": "YOUR_GOOGLE_CSE_ID"
   },
+  "voiceService": {
+    "endpoint": "http://voiceservice:8000",
+    "defaultVoice": "af_sarah",
+    "defaultDevice": "Channel_1__Channel_2.2"
+  },
   "adminUser": {
     "username": "admin",
     "passwordHash": "",
