@@ -1,0 +1,45 @@
+{
+  "redis": {
+    "server": "redis",
+    "port": 6379,
+    "password": ""
+  },
+  "chroma": {
+    "url": "http://chromadb:8000",
+    "collection": "signalzero",
+    "useExternal": true
+  },
+  "inference": {
+    "provider": "local",
+    "apiKey": "YOUR_API_KEY_HERE",
+    "endpoint": "http://host.docker.internal:1234/v1",
+    "model": "your-model-name",
+    "loopModel": "your-loop-model-name",
+    "visionModel": "your-vision-model-name",
+    "savedConfigs": {
+      "gemini": {
+        "apiKey": "YOUR_GEMINI_KEY",
+        "endpoint": "https://generativelanguage.googleapis.com",
+        "model": "gemini-2.5-pro",
+        "loopModel": "gemini-2.5-pro",
+        "visionModel": "gemini-1.5-flash"
+      },
+      "local": {
+        "apiKey": "",
+        "endpoint": "http://host.docker.internal:1234/v1",
+        "model": "openai/gpt-oss-120b",
+        "loopModel": "openai/gpt-oss-120b",
+        "visionModel": "gpt-4o-mini"
+      }
+    }
+  },
+  "googleSearch": {
+    "apiKey": "YOUR_GOOGLE_SEARCH_KEY",
+    "cx": "YOUR_GOOGLE_CSE_ID"
+  },
+  "adminUser": {
+    "username": "admin",
+    "passwordHash": "",
+    "salt": ""
+  }
+}
