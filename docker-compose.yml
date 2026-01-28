@@ -80,6 +80,8 @@ services:
     environment:
       - PULSE_SERVER=tcp:host.docker.internal:4713
       - KERNEL_URL=http://localnode:3001/api
+      - API_USERNAME=${API_USERNAME:-admin}
+      - API_PASSWORD=${API_PASSWORD:-admin}
     depends_on:
       - localnode
     networks:
