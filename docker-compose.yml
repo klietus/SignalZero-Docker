@@ -52,6 +52,7 @@ services:
       - GOOGLE_CSE_ID=${GOOGLE_CSE_ID}
       - NODE_OPTIONS=--max-old-space-size=4096
       - PULSE_SERVER=tcp:host.docker.internal:4713
+      - INTERNAL_SERVICE_KEY=${INTERNAL_SERVICE_KEY}
     deploy:
       resources:
         limits:
@@ -80,8 +81,7 @@ services:
     environment:
       - PULSE_SERVER=tcp:host.docker.internal:4713
       - KERNEL_URL=http://localnode:3001/api
-      - API_USERNAME=${API_USERNAME:-admin}
-      - API_PASSWORD=${API_PASSWORD:-admin}
+      - INTERNAL_SERVICE_KEY=${INTERNAL_SERVICE_KEY}
     depends_on:
       - localnode
     networks:
