@@ -42,8 +42,6 @@ services:
       - INFERENCE_PROVIDER=local
       - INFERENCE_ENDPOINT=http://host.docker.internal:1234/v1
       - SETTINGS_FILE_PATH=/app/data/settings.json
-      - GOOGLE_CUSTOM_SEARCH_KEY=${GOOGLE_CUSTOM_SEARCH_KEY}
-      - GOOGLE_CSE_ID=${GOOGLE_CSE_ID}
       - NODE_OPTIONS=--max-old-space-size=4096
       - PULSE_SERVER=tcp:host.docker.internal:4713
       - INTERNAL_SERVICE_KEY=${INTERNAL_SERVICE_KEY}
