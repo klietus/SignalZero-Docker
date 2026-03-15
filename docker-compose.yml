@@ -43,15 +43,15 @@ services:
       - INFERENCE_ENDPOINT=http://host.docker.internal:1234/v1
       - SETTINGS_FILE_PATH=/app/data/settings.json
       - SERPAPI_API_KEY=${SERPAPI_API_KEY}
-      - NODE_OPTIONS=--max-old-space-size=20480
+      - NODE_OPTIONS=--max-old-space-size=12288
       - PULSE_SERVER=tcp:host.docker.internal:4713
       - INTERNAL_SERVICE_KEY=${INTERNAL_SERVICE_KEY}
     deploy:
       resources:
         limits:
-          memory: 24G
+          memory: 16G
         reservations:
-          memory: 12G
+          memory: 8G
     volumes:
       - node_logs:/app/logs
       - node_data:/app/data
