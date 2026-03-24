@@ -5,7 +5,7 @@ DOCKER_USER="klietus"
 NODE_IMAGE="signalzero-node"
 CHAT_IMAGE="signalzero-chat"
 VOICE_IMAGE="signalzero-voice"
-VERSION="2.1.1"
+VERSION="2.1.2"
 
 echo "🚀 Starting SignalZero Publication Process (v$VERSION)..."
 
